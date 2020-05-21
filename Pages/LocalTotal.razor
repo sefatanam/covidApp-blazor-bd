@@ -1,0 +1,106 @@
+﻿@page "/localInfo"
+@using CovidStatistics.Data;
+@using CovidStatistics.Models;
+@using CovidStatistics.Components;
+
+
+<div class="row" style="justify-content:center">
+    <div class="col-md-6">
+        <h1 style="color:aliceblue;" align="center"> TOTAL AFFECTED IN BANGLADESH</h1>
+        <p style="color:aliceblue" align="center"> @DateTime.DayOfWeek  |UTC(6+): @DateTime.UtcNow</p>
+
+        <hr style="background-color: aliceblue" />
+    </div>
+</div>
+
+@if (CovidInfo != null && isShown)
+{
+    <div class="row" style="justify-content:center">
+        <table class="table table-bordered table-hover" style="width:initial">
+            <tbody>
+                <tr>
+                    <td> <h1 class="title">Today's Cases</h1> </td>
+                    <td> <h1 class="title">@CovidInfo.TodayCases</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Today's Deaths</h1> </td>
+                    <td><h1 class="title">@CovidInfo.TodayDeaths</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Total Test</h1></td>
+                    <td><h1 class="title">@CovidInfo.Tests</h1></td>
+                </tr>
+                <tr>
+                    <td> <h1 class="title">Total Cases</h1> </td>
+                    <td> <h1 class="title">@CovidInfo.Cases</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Total Deaths</h1> </td>
+                    <td><h1 class="title">@CovidInfo.Deaths</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Total Recovered</h1></td>
+                    <td><h1 class="title">@CovidInfo.Recovered</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Total Active Cases</h1></td>
+                    <td><h1 class="title">@CovidInfo.Active</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Critical Cases</h1> </td>
+                    <td><h1 class="title">@CovidInfo.Critical</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Cases Per Million</h1> </td>
+                    <td><h1 class="title">@CovidInfo.CasesPerOneMillion</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Test Per Million</h1> </td>
+                    <td><h1 class="title">@CovidInfo.TestsPerOneMillion</h1></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+}
+else
+{
+
+    <div class="row" style="justify-content: center">
+        <div class="col-md-6">
+            <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+        </div>
+    </div>
+}
+
+
+
+@code {
+        private ApiServices _service = new ApiServices();
+        private CovidInfo CovidInfo = new CovidInfo();
+        private bool isShown { get; set; } = false;
+        private DateTime DateTime { get; set; }
+
+        private DateTime univDteTime{get;set;}
+    private List<CovidInfo> CovidInfoData = new List<CovidInfo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            CovidInfo = await _service.BanglaCovidInfoData();
+            await Task.Delay(90);
+            isShown = true;
+
+        }
+        catch (Exception)
+        {
+
+            isShown = false;
+        }
+
+
+    }
+}

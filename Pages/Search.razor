@@ -1,0 +1,175 @@
+﻿@page "/searchCountry"
+
+@using CovidStatistics.Data;
+@using CovidStatistics.Models;
+
+
+<div class="row" style="justify-content:center">
+    <div class="col-md-6">
+        <h1 style="color:aliceblue;" align="center"> Search Other Countries Result  </h1>
+        <hr style="background-color:aliceblue" />
+        <br />
+    </div>
+</div>
+<div class="row" style="justify-content:center">
+    <div class="col-md-6">
+        <div class="input-group">
+            <input type="text" style="height:60px;font-size:large" @bind-value="@CountryName" class="form-control" placeholder="Country Name or Initial">
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" @onclick="@SearchButtonClicked">
+                    <i class="oi oi-eye"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (CovidModelData != null)
+{
+    @if (isButtonClicked)
+    {
+        @if (covidModel != null && isShown)
+        {
+            <br />
+
+            <div class="row" style="justify-content:center">
+                <div class="col-md-6">
+                    <h2 style="color:aliceblue;" align="center">Country Name : @covidModel.Country </h2>
+                    <p style="color:aliceblue;" align="center">(Today's Cases could be delay to update)</p>
+
+
+                </div>
+            </div>
+            <br />
+            <div class="row" style="justify-content:center">
+                <table class="table table-bordered table-hover" style="width:initial">
+                    <tbody>
+
+                        <tr>
+                            <td> <h1 class="title">Today's Cases</h1> </td>
+                            <td> <h1 class="title">@covidModel.TodayCases</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Today's Deaths</h1> </td>
+                            <td><h1 class="title">@covidModel.TodayDeaths</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Total Test</h1></td>
+                            <td><h1 class="title">@covidModel.Tests</h1></td>
+                        </tr>
+                        <tr>
+                            <td> <h1 class="title">Total Cases</h1> </td>
+                            <td> <h1 class="title">@covidModel.Cases</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Total Deaths</h1> </td>
+                            <td><h1 class="title">@covidModel.Deaths</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Total Recovered</h1></td>
+                            <td><h1 class="title">@covidModel.Recovered</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Total Active Cases</h1></td>
+                            <td><h1 class="title">@covidModel.Active</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Critical Cases</h1> </td>
+                            <td><h1 class="title">@covidModel.Critical</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Cases Per Million</h1> </td>
+                            <td><h1 class="title">@covidModel.CasesPerOneMillion</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 class="title">Test Per Million</h1> </td>
+                            <td><h1 class="title">@covidModel.TestsPerOneMillion</h1></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        }
+        else
+        {
+            <div class="row" style="justify-content:center">
+                <div class="col-md-6">
+                    <br />
+                    <h1 style="color:aliceblue;" align="center"> @SearchStatus  </h1>
+                </div>
+            </div>
+
+        }
+
+    }
+}
+else
+{
+    <div class="row" style="justify-content:center">
+        <div class="col-md-6">
+            <br />
+            <h1 style="color:aliceblue;" align="center"> RELOAD THE PAGE   </h1>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+@code {
+
+    private ApiServices _service = new ApiServices();
+    private CovidInfo covidModel = new CovidInfo();
+    private bool isShown { get; set; } = false;
+    private bool isButtonClicked { get; set; } = false;
+    private string SearchStatus { get; set; } = " wait a second or refresh this page";
+    private string CountryName { get; set; }
+    private List<CovidInfo> CovidModelData = new List<CovidInfo>();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            CovidModelData = await _service.CovidInfoData();
+            await Task.Delay(100);
+
+
+        }
+        catch (Exception)
+        {
+
+            CovidModelData = null;
+        }
+
+
+    }
+
+    private async Task SearchButtonClicked()
+    {
+
+        if (!String.IsNullOrWhiteSpace(CountryName))
+        {
+            isShown = true;
+            covidModel = CovidModelData.Where(c => c.Country.ToLower().Contains(CountryName.ToLower())).FirstOrDefault();
+            await Task.Delay(10);
+            if (covidModel == null)
+            {
+                SearchStatus = $"This keyword {CountryName} not match with our record! Please try again.";
+            }
+
+        }
+        else
+        {
+            SearchStatus = "Please Enter Any Country Name or Initial";
+        }
+
+
+        isButtonClicked = true;
+    }
+}

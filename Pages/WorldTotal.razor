@@ -1,0 +1,136 @@
+﻿@page "/worldTotal"
+
+@using CovidStatistics.Data;
+@using CovidStatistics.Models;
+@using CovidStatistics.Components;
+
+
+
+<div class="row" style="justify-content:center">
+    <div class="col-md-6">
+        <h1 style="color:aliceblue;" align="center"> TODAY AROUND THE WORLD </h1>
+        <p style="color:aliceblue" align="center"> @DateTime.DayOfWeek  |UTC(6+): @DateTime.UtcNow</p>
+
+        <hr style="background-color: aliceblue" />
+    </div>
+</div>
+
+@if (@_worldWideInfo != null && isShown)
+{
+    <div class="row" style="justify-content:center">
+        <table class="table table-bordered table-hover" style="width:initial">
+            <tbody>
+                <tr>
+                    <td><h1 class="title">Affected Countries</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.AffectedCountries</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Population</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.Population</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Tests</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.Tests</h1></td>
+                </tr>
+                <tr>
+                    <td> <h1 class="title">Updated</h1> </td>
+                    <td> <h1 class="title">@_worldWideInfo.Updated</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Cases</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.Cases</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Today Cases</h1></td>
+                    <td><h1 class="title">@_worldWideInfo.TodayCases</h1></td>
+                </tr>
+                <tr>
+                    <td> <h1 class="title">Deaths</h1> </td>
+                    <td> <h1 class="title">@_worldWideInfo.Deaths</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Today Deaths</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.TodayDeaths</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title"> Recovered</h1></td>
+                    <td><h1 class="title">@_worldWideInfo.Recovered</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title"> Active </h1></td>
+                    <td><h1 class="title">@_worldWideInfo.Active</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Critical </h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.Critical</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Test Per 1 Million</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.TestsPerOneMillion</h1></td>
+                </tr>
+
+                <tr>
+                    <td><h1 class="title">Cases Per 1 Million</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.CasesPerOneMillion</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Deaths Per 1 Million</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.DeathsPerOneMillion</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Active Per 1 Million</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.ActivePerOneMillion</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Critical Per 1 Million</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.CriticalPerOneMillion</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 class="title">Recovered Per 1 Million</h1> </td>
+                    <td><h1 class="title">@_worldWideInfo.RecoveredPerOneMillion</h1></td>
+                </tr>
+
+
+            </tbody>
+
+        </table>
+    </div>
+
+}
+else
+{
+
+    <div class="row" style="justify-content:center">
+        <div class="col-md-6">
+            <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+        </div>
+    </div>
+}
+
+
+
+@code {
+    private ApiServices _service = new ApiServices();
+    private WorldWideInfo _worldWideInfo = new WorldWideInfo();
+    private bool isShown { get; set; } = false;
+    private DateTime DateTime { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            _worldWideInfo = await _service.AroundTheWorld();
+            await Task.Delay(100);
+            isShown = true;
+
+        }
+        catch (Exception)
+        {
+
+            isShown = false;
+        }
+
+
+    }
+}
