@@ -4871,7 +4871,7 @@ Docs & License: https://fullcalendar.io/
 
 .fc-ltr .fc-dayGrid-view .fc-day-top .fc-week-number {
   float: left;
-  border-radius: 0 0 3px 0; }
+  border-radius: 0 0 3px; }
 
 .fc-rtl .fc-dayGrid-view .fc-day-top .fc-week-number {
   float: right;
@@ -5040,8 +5040,8 @@ be a descendant of the grid when it is being dragged.
   margin-bottom: 1px; }
 
 .fc-time-grid-event-inset {
-  -webkit-box-shadow: 0px 0px 0px 1px #fff;
-  box-shadow: 0px 0px 0px 1px #fff; }
+  -webkit-box-shadow: 0 0 0 1px #fff;
+  box-shadow: 0 0 0 1px #fff; }
 
 .fc-time-grid-event.fc-not-start {
   /* events that are continuing from another day */
@@ -5573,7 +5573,7 @@ p-accordiontab {
   justify-content: space-between; }
 
 .ui-panel-content {
-  margin: 1.4375rem 0 0 0; }
+  margin: 1.4375rem 0 0; }
 
 .ui-panel-content-wrapper[aria-hidden='true'] {
   display: none; }
@@ -5711,7 +5711,7 @@ p-accordiontab {
       width: 4px;
       background-color: #479cc8; }
   .panel-menu .navigation-item-link {
-    padding: 0 1.25rem 0 1.25rem;
+    padding: 0 1.25rem;
     color: inherit;
     cursor: pointer; }
   .panel-menu a.navigation-item-link {
@@ -6275,7 +6275,7 @@ p-radiobutton,
 .ui-picklist-caption {
   color: #479cc8;
   border-bottom: 1px solid #dadfe2;
-  padding: 0.5625rem 1.25rem 0.625rem 1.25rem; }
+  padding: 0.5625rem 1.25rem 0.625rem; }
 
 .ui-picklist-item {
   cursor: default;
@@ -6326,7 +6326,7 @@ p-radiobutton,
     margin: 2px 0; }
 
 .ui-picklist-filter-container {
-  padding: 0.5625rem 1.25rem 0 1.25rem; }
+  padding: 0.5625rem 1.25rem 0; }
 
 .ui-splitbutton {
   display: inline-block; }
@@ -6830,7 +6830,7 @@ p-radiobutton,
 
 .ui-datatable-thead th {
   background-color: #e6ecef;
-  padding: 0.5rem 0 0 0;
+  padding: 0.5rem 0 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
@@ -6848,7 +6848,7 @@ p-radiobutton,
   background-color: #e6ecef;
   font-size: 0.875rem;
   color: #48606c;
-  padding: 0.5rem 0.625rem 0.5rem 0.625rem;
+  padding: 0.5rem 0.625rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
@@ -6918,7 +6918,7 @@ p-radiobutton,
     padding: 0 0.25rem; }
 
 .ui-datatable-data td {
-  padding: 0.5rem 0.625rem 0.5rem 0.625rem;
+  padding: 0.5rem 0.625rem;
   border-bottom: solid 1px #dfe7eb; }
   .ui-datatable-data td:not(:last-child) {
     border-right: solid 1px #dfe7eb; }
@@ -7274,7 +7274,7 @@ p-radiobutton,
     width: 100%; }
     .ui-treetable-wrapper > table th {
       background-color: #e6ecef;
-      padding: 0.5rem 0 0 0; }
+      padding: 0.5rem 0 0; }
       .ui-treetable-wrapper > table th:not(:last-child) {
         border-right: solid 1px #dfe7eb; }
       .ui-treetable-wrapper > table th .ui-column-title {
@@ -7311,7 +7311,7 @@ p-treetabletoggler {
 
 .ui-treetable-tbody td {
   background-color: #ffffff;
-  padding: 0.5rem 0.625rem 0.5rem 0.625rem;
+  padding: 0.5rem 0.625rem;
   border-top: solid 1px #dfe7eb; }
   .ui-treetable-tbody td:not(:last-child) {
     border-right: solid 1px #dfe7eb; }
@@ -7622,7 +7622,7 @@ a.fc-event {
 @media (max-width: 768px) {
   .ui-dialog:not(.ui-confirmdialog) {
     width: 100% !important;
-    top: 0px !important; }
+    top: 0 !important; }
   .ui-dialog-content {
     -webkit-overflow-scrolling: touch; }
   .no-scroll {
